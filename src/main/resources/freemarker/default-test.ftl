@@ -1,0 +1,29 @@
+<table style="min-width: 100%; border: 1px solid gainsboro;">
+    <tr>
+        <td>
+            <#include "header.ftl">
+        </td>
+    </tr>
+
+    <tr>
+        <td style=" padding: 10px;">
+            Hi!
+
+            <div style="height: 5px; clear: both;"></div>
+
+            <p>
+            ${message.details}
+            </p>
+        </td>
+    </tr>
+
+    <tr>
+        <td style=" padding: 10px;">
+            <#include "footer.ftl">
+        </td>
+    </tr>
+</table>
+
+
+
+

@@ -1,0 +1,46 @@
+<div style="height: 10px; clear: both;"></div>
+
+<strong>$attObjectParent.name</strong>
+<div style="height: 10px; clear: both;"></div>
+
+<div style="display: table;">
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Details
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $attObject.details
+        </div>
+    </div>
+
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Created By
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $attObject.createdBy.displayName
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Date Created
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $attObject.dateCreated
+        </div>
+    </div>
+</div>
+
+
+<div style="height: 10px; clear: both;"></div>
+You can find more details here:
+<div style="height: 10px; clear: both;"></div>
+<a href="$application_url/att_object/$attObject.rcode/view_r">$application_url/att_object/$attObject.rcode/view_r</a>
+
+<div style="height: 20px; clear: both;"></div>

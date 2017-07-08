@@ -1,0 +1,28 @@
+<table style="min-width: 100%; border: 1px solid gainsboro;">
+    <tr>
+        <td>
+            #parse( "/email-templates/header.vm" )
+        </td>
+    </tr>
+
+    <tr>
+        <td style=" padding: 10px;">
+
+            Hi!
+
+            <div style="height: 5px; clear: both;"></div>
+
+            <p>
+            This is receipt to your actionItem generation.
+
+            #parse( "/email-templates/actionItem/details.vm" )
+
+        </td>
+    </tr>
+
+    <tr>
+        <td style=" padding: 10px;">
+            #parse( "/email-templates/footer.vm" )
+        </td>
+    </tr>
+</table>

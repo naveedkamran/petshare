@@ -1,0 +1,35 @@
+<table style="min-width: 100%; border: 1px solid gainsboro;">
+    <tr>
+        <td>
+            #parse( "/email-templates/header.vm" )
+        </td>
+    </tr>
+
+    <tr>
+        <td style=" padding: 10px;">
+
+            Hi $userAccount.firstName!
+
+            <div style="height: 5px; clear: both;"></div>
+
+            <p>
+            This is to confirm that your registration is successful.
+            <div style="height: 5px; clear: both;"></div>
+            Please click the following Link to login to the application:
+            <div style="height: 5px; clear: both;"></div>
+            <a href="$application_url">Login</a>
+            <div style="height: 5px; clear: both;"></div>
+            Your displayName is: <strong>$userAccount.displayName</strong>
+            <div style="height: 5px; clear: both;"></div>
+            User Account created By: <strong>$userAccount.createdBy.displayName</strong>
+            <div style="height: 5px; clear: both;"></div>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td style=" padding: 10px;">
+            #parse( "/email-templates/footer.vm" )
+        </td>
+    </tr>
+</table>

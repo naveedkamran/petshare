@@ -1,0 +1,84 @@
+<div style="height: 5px; clear: both;"></div>
+
+<div style="display: table;">
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Name
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            <strong>$rcollection.name</strong>
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Status
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $rcollection.rstatus
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Priority
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $rcollection.rpriority
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Description
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $rcollection.description
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Details
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $rcollection.details
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Created By
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $rcollection.createdBy.displayName
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Date Created
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $rcollection.dateCreated
+        </div>
+    </div>
+</div>
+
+
+##TEMPCOMMENT
+##<div style="height: 5px; clear: both;"></div>
+##Assigned to: $rcollection.assignedTo.firstName!
+
+<div style="height: 10px; clear: both;"></div>
+You can find the details of the rcollection here:
+<div style="height: 10px; clear: both;"></div>
+<a href="$application_url/rcollection/$rcollection.rcode/view_r">$application_url/rcollection/$rcollection.rcode/view_r</a>
+<div style="height: 10px; clear: both;"></div>

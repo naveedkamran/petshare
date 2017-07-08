@@ -1,0 +1,157 @@
+<div style="height: 5px; clear: both;"></div>
+
+<div style="display: table;">
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Title
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            <strong>$timeLog.name</strong>
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Project
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            <a href="project/$timeLog.supportTicket.project.rcode/view_r">$timeLog.supportTicket.project.name</a>
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Support Ticket
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            <a href="support_ticket/$timeLog.supportTicket.rcode/view_r">$timeLog.supportTicket.name</a>
+        </div>
+    </div>
+
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Status
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $timeLog.rstatus
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            ETW
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $timeLog.etwAsString ($timeLog.etw Minutes)
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Description
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $timeLog.description
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Details
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $timeLog.details
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Comments
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $timeLog.comments
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Created By
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $timeLog.createdBy.displayName
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Date Created
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $timeLog.dateCreated
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Type
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            #$timeLog.rtype.name
+        </div>
+    </div>
+
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Time Duration
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $timeLog.dateFrom to $timeLog.dateTo
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            External System ID
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $timeLog.scVersion
+        </div>
+    </div>
+
+    <div style="display: table-row;">
+        <div style="display: table-cell; padding: 5px; vertical-align: top; text-wrap: normal; color: #006EB9; min-width: 120px; text-align: right">
+            Request Source
+        </div>
+
+        <div style="display: table-cell; padding: 5px; vertical-align: top;">
+            $timeLog.requestSource
+        </div>
+    </div>
+
+</div>
+
+
+##TEMPCOMMENT
+##<div style="height: 5px; clear: both;"></div>
+##Assigned to: $timeLog.assignedTo.firstName!
+
+<div style="height: 10px; clear: both;"></div>
+You can find the details of the timeLog here:
+<div style="height: 10px; clear: both;"></div>
+<a href="$application_url/time_log/$timeLog.rcode/view_r">$application_url/time_log/$timeLog.rcode/view_r</a>
+<div style="height: 10px; clear: both;"></div>
