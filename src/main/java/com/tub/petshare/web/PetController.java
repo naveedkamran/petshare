@@ -4,8 +4,12 @@ import com.mongodb.client.FindIterable;
 import com.tub.petshare.apputil.ObjFactory;
 import com.tub.petshare.domain.Pet;
 import com.tub.petshare.service.PetService;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
@@ -108,6 +114,29 @@ public class PetController {
         }
 
         PetService.getInstance().delete(id);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/pet/pic/{id}", method = RequestMethod.POST,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<Void> delete(
+            @PathVariable(name = "id") String id,
+            @RequestParam("file") MultipartFile file) {
+        Document currentDocument = PetService.getInstance().read(id);
+//tempcomment
+//        if (currentDocument == null) {
+//            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+//        }
+
+        try {
+            file.transferTo(new File("D:/petshare-repo/" + id + "/" + file.getName()));
+        } catch (Exception ex) {
+            Logger.getLogger(PetController.class.getName()).log(Level.SEVERE, null, ex);
+
+            return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
+        }
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

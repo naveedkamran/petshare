@@ -2,9 +2,12 @@ package com.tub.petshare.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tub.petshare.domain.Pet;
+import java.io.FileInputStream;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,14 +17,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.codec.Base64;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -130,6 +136,44 @@ public class PetWebTest {
                 List.class);
 
         System.out.println("List Size: " + list.size());
+
+    }
+
+    @Test
+    public void uploadFileTest() {
+        try {
+            MockMultipartFile multipartFile
+                    = new MockMultipartFile("file", new FileInputStream("D:/test-data/02.jpg"));
+
+            String id = "1";
+
+            this.mvc.perform(fileUpload("/pet/pic/" + id, new Object[0]).file(multipartFile))
+                    .andExpect(status().isOk());;
+            //.andExpect(status().isFound())
+            //.andExpect(header().string("Location", "/"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Logger.getLogger(PetWebTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @Test
+    public void uploadFileTestPost() {
+        try {
+            MockMultipartFile multipartFile
+                    = new MockMultipartFile("file", new FileInputStream("D:/test-data/02.jpg"));
+
+            String id = "1";
+
+            this.mvc.perform(post("/pet/pic/" + id))
+                    .andExpect(status().isOk());
+            //.andExpect(status().isFound())
+            //.andExpect(header().string("Location", "/"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Logger.getLogger(PetWebTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 }
