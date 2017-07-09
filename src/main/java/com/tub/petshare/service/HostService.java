@@ -20,16 +20,16 @@ public class HostService {
 
     public void create(Map map) {
         BasicDBObject document = new BasicDBObject();
-        MongoDbUtil.getInstance().getMongoDatabase().getCollection("hosts").insertOne(new Document(map));
+        MongoDbUtil.getInstance().getMongoDatabase().getCollection(Constants.table_name_host).insertOne(new Document(map));
     }
 
     public Document read(String id) {
-        return MongoDbUtil.getInstance().getMongoDatabase().getCollection("hosts").find(
+        return MongoDbUtil.getInstance().getMongoDatabase().getCollection(Constants.table_name_host).find(
                 new BasicDBObject().append("_id", id)).first();
     }
 
     public FindIterable<Document> list() {
-        return MongoDbUtil.getInstance().getMongoDatabase().getCollection("hosts").find();
+        return MongoDbUtil.getInstance().getMongoDatabase().getCollection(Constants.table_name_host).find();
     }
 
     public String update(Map map) {
@@ -37,7 +37,7 @@ public class HostService {
     }
 
     public void delete(String id) {
-        MongoDbUtil.getInstance().getMongoDatabase().getCollection("hosts").deleteOne(
+        MongoDbUtil.getInstance().getMongoDatabase().getCollection(Constants.table_name_host).deleteOne(
                 new BasicDBObject().append("_id", id));
     }
 }

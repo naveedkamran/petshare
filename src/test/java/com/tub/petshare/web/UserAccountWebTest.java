@@ -1,7 +1,7 @@
 package com.tub.petshare.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tub.petshare.domain.Pet;
+import com.tub.petshare.domain.UserAccount;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +31,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("scratch")
-public class PetWebTest {
+public class UserAccountWebTest {
 
     @Autowired
     private WebApplicationContext context;
@@ -56,25 +56,21 @@ public class PetWebTest {
 
     @Test
     public void create() throws Exception {
-        Pet pet = new Pet();
-        pet.setAge(Integer.SIZE);
-        pet.setContact("+491234567");
-        pet.setDescription("some dummy text");
-        pet.setId("1");
-        pet.setLocation("Berlin");
-        pet.setName("Pet");
+        UserAccount userAccount = new UserAccount();
+        userAccount.setUsername("someuser");
+        userAccount.setPassword("somepasstext");
 
         this.mvc.perform(
-                post("/pet")
+                post("/userAccount")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(pet)))
+                        .content(asJsonString(userAccount)))
                 .andExpect(status().isCreated());
 
     }
 
     @Test
     public void readById() throws Exception {
-        this.mvc.perform(get("/pet/{id}", 1))
+        this.mvc.perform(get("/userAccount/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(1)));
@@ -101,32 +97,28 @@ public class PetWebTest {
 
     @Test
     public void update() throws Exception {
-        Pet pet = new Pet();
-        pet.setAge(Integer.SIZE);
-        pet.setContact("+491234567");
-        pet.setDescription("some dummy text");
-        pet.setId("1");
-        pet.setLocation("Berlin");
-        pet.setName("Pet");
+        UserAccount userAccount = new UserAccount();
+        userAccount.setUsername("someuser");
+        userAccount.setPassword("somepasstext");
 
         this.mvc.perform(
-                put("/pet", new Object[0])
+                put("/userAccount", new Object[0])
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(pet)))
+                        .content(asJsonString(userAccount)))
                 .andExpect(status().isConflict());
 
     }
 
     @Test
-    public void accessPetsList() {
+    public void accessUserAccountsList() {
         HttpEntity<String> requestEntity = new HttpEntity<String>(
                 "{ \"name\":\"MyFirstProject\", \"description\":\"My Project Sahab\" } }",
                 getHeaders("name" + ":" + "description"));
 
         RestTemplate template = new RestTemplate();
 
-        List<Pet> list = template.getForObject(
-                "http://localpet:8080/pet",
+        List<UserAccount> list = template.getForObject(
+                "http://localuserAccount:8080/userAccount",
                 List.class);
 
         System.out.println("List Size: " + list.size());

@@ -16,6 +16,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    SecUserDetailsService userDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -23,6 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/home").permitAll()
                 .antMatchers("/", "/host*").permitAll()
                 .antMatchers("/", "/ping").permitAll()
+                .antMatchers("/", "/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -35,7 +39,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+        auth.userDetailsService(userDetailsService);
     }
 }

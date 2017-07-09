@@ -1,6 +1,10 @@
 package com.tub.petshare.service;
 
-import com.tub.petshare.domain.Pet;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
+import com.tub.petshare.nosql.MongoDbUtil;
+import java.util.Map;
+import org.bson.Document;
 
 /**
  *
@@ -14,23 +18,26 @@ public class PetService {
         return instance;
     }
 
-    public String create(Pet pet) {
+    public void create(Map map) {
+        BasicDBObject document = new BasicDBObject();
+        MongoDbUtil.getInstance().getMongoDatabase().getCollection(Constants.table_name_pet).insertOne(new Document(map));
+    }
+
+    public Document read(String id) {
+        return MongoDbUtil.getInstance().getMongoDatabase().getCollection(Constants.table_name_pet).find(
+                new BasicDBObject().append("_id", id)).first();
+    }
+
+    public FindIterable<Document> list() {
+        return MongoDbUtil.getInstance().getMongoDatabase().getCollection(Constants.table_name_pet).find();
+    }
+
+    public String update(Map map) {
         return null;
     }
 
-    public String read(String id) {
-        return null;
-    }
-
-    public String list() {
-        return null;
-    }
-
-    public String update(Pet pet) {
-        return null;
-    }
-
-    public String delete(String id) {
-        return null;
+    public void delete(String id) {
+        MongoDbUtil.getInstance().getMongoDatabase().getCollection(Constants.table_name_pet).deleteOne(
+                new BasicDBObject().append("_id", id));
     }
 }
