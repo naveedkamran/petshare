@@ -69,6 +69,21 @@ public class UserAccountWebTest {
     }
 
     @Test
+    public void createSampleUserAccount() throws Exception {
+        for (int i = 0; i < 5; i++) {
+            UserAccount userAccount = new UserAccount();
+            userAccount.setUsername("testuser" + (i + 1));
+            userAccount.setPassword("testuser" + (i + 1));
+
+            this.mvc.perform(
+                    post("/userAccount")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(asJsonString(userAccount)))
+                    .andExpect(status().isCreated());
+        }
+    }
+
+    @Test
     public void readById() throws Exception {
         this.mvc.perform(get("/userAccount/{id}", 1))
                 .andExpect(status().isOk())
@@ -122,6 +137,34 @@ public class UserAccountWebTest {
                 List.class);
 
         System.out.println("List Size: " + list.size());
+
+    }
+
+    @Test
+    public void login() throws Exception {
+        UserAccount userAccount = new UserAccount();
+        userAccount.setUsername("testuser1");
+        userAccount.setPassword("testuser1");
+
+        this.mvc.perform(
+                post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(userAccount)))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void loginBad01() throws Exception {
+        UserAccount userAccount = new UserAccount();
+        userAccount.setUsername("testuser10000");
+        userAccount.setPassword("testuser10000");
+
+        this.mvc.perform(
+                post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(userAccount)))
+                .andExpect(status().isForbidden());
 
     }
 }

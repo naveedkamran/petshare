@@ -41,9 +41,14 @@ public class UserAccountController {
     @ResponseBody
     public ResponseEntity<Void> create(@RequestBody UserAccount userAccount,
             UriComponentsBuilder ucBuilder) {
+        HttpHeaders headers = new HttpHeaders();
+
+        if (UserAccountService.getInstance().readByUsername(userAccount.getUsername()) != null) {
+            return new ResponseEntity<Void>(headers, HttpStatus.BAD_REQUEST);
+        }
+
         UserAccountService.getInstance().create(castToMap(userAccount));
 
-        HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/userAccount/{id}").buildAndExpand(1L).toUri());
 
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -107,18 +112,6 @@ public class UserAccountController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<Void> signup(@RequestBody UserAccount userAccount,
-            UriComponentsBuilder ucBuilder) {
-        UserAccountService.getInstance().create(castToMap(userAccount));
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/userAccount/{id}").buildAndExpand(1L).toUri());
-
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-    }
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Void> login(@RequestBody UserAccount userAccount) {
@@ -136,9 +129,12 @@ public class UserAccountController {
 
     @RequestMapping(value = "logout", method = RequestMethod.POST)
     @ResponseBody
-    public AppMessage logout() {
+    public ResponseEntity<Void> logout() {
+        HttpHeaders headers = new HttpHeaders();
+
         UserAccountService.getInstance();
-        return new AppMessage(true, "--fixme--User logged out.");
+
+        return new ResponseEntity<Void>(headers, HttpStatus.OK);
     }
 
 }
