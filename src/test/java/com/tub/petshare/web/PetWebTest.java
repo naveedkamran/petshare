@@ -148,26 +148,9 @@ public class PetWebTest {
             String id = "1";
 
             this.mvc.perform(fileUpload("/pet/pic/" + id, new Object[0]).file(multipartFile))
-                    .andExpect(status().isOk());;
-            //.andExpect(status().isFound())
-            //.andExpect(header().string("Location", "/"));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Logger.getLogger(PetWebTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    @Test
-    public void uploadFileTestPost() {
-        try {
-            MockMultipartFile multipartFile
-                    = new MockMultipartFile("file", new FileInputStream("D:/test-data/02.jpg"));
-
-            String id = "1";
-
-            this.mvc.perform(post("/pet/pic/" + id))
                     .andExpect(status().isOk());
+
+            System.out.println("Done");
             //.andExpect(status().isFound())
             //.andExpect(header().string("Location", "/"));
         } catch (Exception ex) {
@@ -176,4 +159,5 @@ public class PetWebTest {
         }
 
     }
+
 }

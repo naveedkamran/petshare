@@ -120,17 +120,19 @@ public class PetController {
     @RequestMapping(value = "/pet/pic/{id}", method = RequestMethod.POST,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<Void> delete(
+    public ResponseEntity<Void> updatePic(
             @PathVariable(name = "id") String id,
             @RequestParam("file") MultipartFile file) {
         Document currentDocument = PetService.getInstance().read(id);
-//tempcomment
-//        if (currentDocument == null) {
-//            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-//        }
+
+        if (currentDocument == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
 
         try {
-            file.transferTo(new File("D:/petshare-repo/" + id + "/" + file.getName()));
+            new File("D:/petshare-repo/" + id).mkdirs();
+
+            file.transferTo(new File("D:/petshare-repo/" + id + "/" + file.getOriginalFilename()));
         } catch (Exception ex) {
             Logger.getLogger(PetController.class.getName()).log(Level.SEVERE, null, ex);
 
