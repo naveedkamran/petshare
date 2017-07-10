@@ -1,0 +1,20 @@
+118.139.182.102
+http://118.139.182.102:8080
+
+tortNav33d99*
+
+
+cd /home/datenc/petshre
+
+cd /home/datenc/petshre/petshre-src
+
+
+mkdir /home/datenc/
+mkdir /home/datenc/petshare/
+mkdir /home/datenc/petshare/petshare-src
+
+git clone https://github.com/naveedkamran/petshare.git /home/datenc/petshare/petshare-src
+
+
+
+cd /home/datenc/petshare/petshare-src
