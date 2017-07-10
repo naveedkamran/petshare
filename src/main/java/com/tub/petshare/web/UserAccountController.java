@@ -86,16 +86,16 @@ public class UserAccountController {
     public ResponseEntity<Document> update(@PathVariable(name = "id") String id,
             @RequestBody UserAccount userAccount) {
 
-        Document currentDocument = UserAccountService.getInstance().read(id);
+        Document docInDb = UserAccountService.getInstance().read(id);
+        Document docNew = new Document(castToMap(userAccount));
 
-        if (currentDocument == null) {
+        if (docInDb == null) {
             return new ResponseEntity<Document>(HttpStatus.NOT_FOUND);
         }
 
-        UserAccountService.getInstance().update(castToMap(userAccount));
+        UserAccountService.getInstance().update(docInDb, docNew);
 
-        return new ResponseEntity<Document>(currentDocument, HttpStatus.OK);
-
+        return new ResponseEntity<Document>(docInDb, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/userAccount/{id}", method = RequestMethod.DELETE,

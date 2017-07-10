@@ -3,9 +3,11 @@ package com.tub.petshare.web;
 import com.mongodb.client.FindIterable;
 import com.tub.petshare.apputil.ObjFactory;
 import com.tub.petshare.domain.Pet;
+import com.tub.petshare.domain.RiakFile;
+import com.tub.petshare.nosql.RiakUtil;
+import com.tub.petshare.service.Constants;
 import com.tub.petshare.service.PetService;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -90,17 +92,16 @@ public class PetController {
     @ResponseBody
     public ResponseEntity<Document> update(@PathVariable(name = "id") String id,
             @RequestBody Pet pet) {
+        Document docInDb = PetService.getInstance().read(id);
+        Document docNew = new Document(castToMap(pet));
 
-        Document currentDocument = PetService.getInstance().read(id);
-
-        if (currentDocument == null) {
+        if (docInDb == null) {
             return new ResponseEntity<Document>(HttpStatus.NOT_FOUND);
         }
 
-        PetService.getInstance().update(castToMap(pet));
+        PetService.getInstance().update(docInDb, docNew);
 
-        return new ResponseEntity<Document>(currentDocument, HttpStatus.OK);
-
+        return new ResponseEntity<Document>(docInDb, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/pet/{id}", method = RequestMethod.DELETE,
@@ -124,15 +125,24 @@ public class PetController {
             @PathVariable(name = "id") String id,
             @RequestParam("file") MultipartFile file) {
         Document currentDocument = PetService.getInstance().read(id);
+        Document newDocument = PetService.getInstance().read(id);
 
         if (currentDocument == null) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
 
         try {
-            new File("D:/petshare-repo/" + id).mkdirs();
+            new File(Constants.file_repo + "/" + id).mkdirs();
 
-            file.transferTo(new File("D:/petshare-repo/" + id + "/" + file.getOriginalFilename()));
+            String fileName = Constants.file_repo + "/" + id + "/" + file.getOriginalFilename();
+
+            file.transferTo(new File(fileName));
+
+            RiakUtil.getInstance().create(new RiakFile(id, fileName), id, "pics");
+
+            newDocument.put("petPicture", file);
+
+            PetService.getInstance().update(currentDocument, newDocument);
         } catch (Exception ex) {
             Logger.getLogger(PetController.class.getName()).log(Level.SEVERE, null, ex);
 

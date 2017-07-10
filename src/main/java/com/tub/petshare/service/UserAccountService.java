@@ -42,8 +42,8 @@ public class UserAccountService {
         return MongoDbUtil.getInstance().getMongoDatabase().getCollection(Constants.table_name_user).find();
     }
 
-    public String update(Map map) {
-        return null;
+    public void update(Document docOld, Document docNew) {
+        MongoDbUtil.getInstance().getMongoDatabase().getCollection(Constants.table_name_user).updateOne(docOld, docNew);
     }
 
     public void delete(String id) {

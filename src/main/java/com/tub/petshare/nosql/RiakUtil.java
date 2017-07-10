@@ -58,14 +58,14 @@ public class RiakUtil {
     }
 
     /**
-     * namespaceName = "books" locationKey = "moby_dick"
+     * namespaceName = "books" objectKey = "moby_dick"
      */
-    public void create(RiakFile objectToPerisit, String locationKey, String namespaceName)
+    public void create(RiakFile objectToPerisit, String objectKey, String namespaceName)
             throws UnknownHostException, ExecutionException, InterruptedException {
         RiakClient client = RiakUtil.getInstance().getRiakClient();
 
         Namespace booksBucket = new Namespace(namespaceName);
-        Location mobyDickLocation = new Location(booksBucket, locationKey);
+        Location mobyDickLocation = new Location(booksBucket, objectKey);
         StoreValue storeBookOp = new StoreValue.Builder(objectToPerisit)
                 .withLocation(mobyDickLocation)
                 .build();
@@ -74,12 +74,12 @@ public class RiakUtil {
 
     }
 
-    public String read(String locationKey, String namespaceNam)
+    public String read(String objectKey, String namespaceNam)
             throws UnknownHostException, UnknownHostException, ExecutionException, InterruptedException {
         RiakClient client = RiakUtil.getInstance().getRiakClient();
 
         Namespace quotesBucket = new Namespace(namespaceNam);
-        Location quoteObjectLocation = new Location(quotesBucket, locationKey);
+        Location quoteObjectLocation = new Location(quotesBucket, objectKey);
         FetchValue fetchOp = new FetchValue.Builder(quoteObjectLocation)
                 .build();
         RiakObject fetchedObject = client.execute(fetchOp).getValue(RiakObject.class);
@@ -106,13 +106,13 @@ public class RiakUtil {
             }
 
 //
-//            String locationKey = "files";
+//            String objectKey = "files";
 //            String namespaceNam = "pics";
 //
-//            RiakUtil.getInstance().create(objectToPerisit, locationKey, namespaceNam);
+//            RiakUtil.getInstance().create(objectToPerisit, objectKey, namespaceNam);
 //
 //            Namespace quotesBucket = new Namespace(namespaceNam);
-//            Location quoteObjectLocation = new Location(quotesBucket, locationKey);
+//            Location quoteObjectLocation = new Location(quotesBucket, objectKey);
 //            FetchValue fetchOp = new FetchValue.Builder(quoteObjectLocation)
 //                    .build();
 //            RiakObject fetchedObject = client.execute(fetchOp).getValue(RiakObject.class);

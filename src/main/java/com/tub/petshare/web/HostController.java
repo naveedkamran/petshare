@@ -87,17 +87,16 @@ public class HostController {
     @ResponseBody
     public ResponseEntity<Document> update(@PathVariable(name = "id") String id,
             @RequestBody Host host) {
+        Document docInDb = HostService.getInstance().read(id);
+        Document docNew = new Document(castToMap(host));
 
-        Document currentDocument = HostService.getInstance().read(id);
-
-        if (currentDocument == null) {
+        if (docInDb == null) {
             return new ResponseEntity<Document>(HttpStatus.NOT_FOUND);
         }
 
-        HostService.getInstance().update(castToMap(host));
+        HostService.getInstance().update(docInDb, docNew);
 
-        return new ResponseEntity<Document>(currentDocument, HttpStatus.OK);
-
+        return new ResponseEntity<Document>(docInDb, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/host/{id}", method = RequestMethod.DELETE,
