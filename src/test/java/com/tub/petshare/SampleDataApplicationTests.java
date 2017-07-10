@@ -1,7 +1,5 @@
 package com.tub.petshare;
 
-import java.lang.management.ManagementFactory;
-import javax.management.ObjectName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -10,8 +8,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     "spring.datasource.jmx-enabled:true"})
 @ActiveProfiles("scratch")
 // Separate profile for web tests to avoid clashing databases
-public class SampleDataJpaApplicationTests {
+public class SampleDataApplicationTests {
 
     @Autowired
     private WebApplicationContext context;
@@ -46,7 +42,6 @@ public class SampleDataJpaApplicationTests {
 
     @Test
     public void testHome() throws Exception {
-
         this.mvc.perform(get("/")).andExpect(status().isOk())
                 .andExpect(content().string("PetShare server 1.0"));
     }

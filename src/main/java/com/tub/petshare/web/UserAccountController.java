@@ -1,12 +1,10 @@
 package com.tub.petshare.web;
 
-import com.datenc.commons.ui.AppMessage;
 import com.mongodb.client.FindIterable;
+import com.tub.petshare.apputil.CastUtil;
 import com.tub.petshare.apputil.ObjFactory;
 import com.tub.petshare.domain.UserAccount;
 import com.tub.petshare.service.UserAccountService;
-import java.util.HashMap;
-import java.util.Map;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,15 +25,6 @@ public class UserAccountController {
     @Autowired
     private ObjFactory objFactory;
 
-    public Map castToMap(UserAccount userAccount) {
-        Map<String, Object> map = new HashMap();
-
-        map.put("username", userAccount.getUsername());
-        map.put("password", userAccount.getPassword());
-
-        return map;
-    }
-
     @RequestMapping(value = "/userAccount", method = RequestMethod.POST,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -47,7 +36,7 @@ public class UserAccountController {
             return new ResponseEntity<Void>(headers, HttpStatus.BAD_REQUEST);
         }
 
-        UserAccountService.getInstance().create(castToMap(userAccount));
+        UserAccountService.getInstance().create(CastUtil.getInstance().castToMap(userAccount));
 
         headers.setLocation(ucBuilder.path("/userAccount/{id}").buildAndExpand(1L).toUri());
 
@@ -87,7 +76,7 @@ public class UserAccountController {
             @RequestBody UserAccount userAccount) {
 
         Document docInDb = UserAccountService.getInstance().read(id);
-        Document docNew = new Document(castToMap(userAccount));
+        Document docNew = new Document(CastUtil.getInstance().castToMap(userAccount));
 
         if (docInDb == null) {
             return new ResponseEntity<Document>(HttpStatus.NOT_FOUND);

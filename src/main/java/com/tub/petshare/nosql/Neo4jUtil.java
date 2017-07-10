@@ -1,5 +1,6 @@
 package com.tub.petshare.nosql;
 
+import com.tub.petshare.service.Constants;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
@@ -25,13 +26,24 @@ public class Neo4jUtil {
         return mongoService;
     }
 
-    public Session getSession() {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "admin"));
-        Session session = driver.session();
+    Session session = null;
+    Driver driver = null;
 
-//        session.close();
-//        driver.close();
+    public Session getSession() {
+        if (session != null) {
+            return session;
+        }
+
+        driver = GraphDatabase.driver("bolt://" + Constants.neo_host + ":" + Constants.neo_port,
+                AuthTokens.basic(Constants.neo_user, Constants.neo_pass));
+        session = driver.session();
+
         return session;
+    }
+
+    public void closeSession() {
+        session.close();
+        driver.close();
     }
 
     public void runQuery(Session session) {

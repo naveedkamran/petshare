@@ -17,8 +17,6 @@ public class ObjFactory {
 
     @Autowired
     private ActionContextDataUtil actionContextDataUtil;
-    @Autowired
-    private LocaleUtil localeUtil;
     ////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -34,19 +32,4 @@ public class ObjFactory {
     public void setActionContextDataUtil(ActionContextDataUtil actionContextDataUtil) {
         this.actionContextDataUtil = actionContextDataUtil;
     }
-
-    /**
-     * @return the localeUtil
-     */
-    public LocaleUtil getLocaleUtil() {
-        return localeUtil;
-    }
-
-    /**
-     * @param localeUtil the localeUtil to set
-     */
-    public void setLocaleUtil(LocaleUtil localeUtil) {
-        this.localeUtil = localeUtil;
-    }
-
 }

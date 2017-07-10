@@ -1,6 +1,7 @@
 package com.tub.petshare.web;
 
 import com.mongodb.client.FindIterable;
+import com.tub.petshare.apputil.CastUtil;
 import com.tub.petshare.apputil.ObjFactory;
 import com.tub.petshare.domain.Host;
 import com.tub.petshare.service.HostService;
@@ -26,29 +27,12 @@ public class HostController {
     @Autowired
     private ObjFactory objFactory;
 
-    public Map castToMap(Host host) {
-        Map<String, Object> map = new HashMap();
-
-        map.put("age", host.getAge());
-        map.put("contact", host.getContact());
-        map.put("description", host.getDescription());
-        map.put("gender", host.getGender());
-        map.put("hostaAttributes", host.getHostaAttributes());
-        map.put("id", host.getId());
-        map.put("location", host.getLocation());
-        map.put("name", host.getName());
-        map.put("petAttributes", host.getPetAttributes());
-        map.put("picture", host.getPicture());
-
-        return map;
-    }
-
     @RequestMapping(value = "/host", method = RequestMethod.POST,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<Void> create(@RequestBody Host host,
             UriComponentsBuilder ucBuilder) {
-        HostService.getInstance().create(castToMap(host));
+        HostService.getInstance().create(CastUtil.getInstance().castToMap(host));
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/host/{id}").buildAndExpand(1L).toUri());
@@ -88,7 +72,7 @@ public class HostController {
     public ResponseEntity<Document> update(@PathVariable(name = "id") String id,
             @RequestBody Host host) {
         Document docInDb = HostService.getInstance().read(id);
-        Document docNew = new Document(castToMap(host));
+        Document docNew = new Document(CastUtil.getInstance().castToMap(host));
 
         if (docInDb == null) {
             return new ResponseEntity<Document>(HttpStatus.NOT_FOUND);

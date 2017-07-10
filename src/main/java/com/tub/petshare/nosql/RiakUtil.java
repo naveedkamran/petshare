@@ -87,40 +87,4 @@ public class RiakUtil {
         return fetchedObject.getValue().toString();
     }
 
-    public static void main(String[] args) {
-        try {
-
-            RiakFile objectToPerisit = new RiakFile();
-            objectToPerisit.setId("1");
-            objectToPerisit.setLocation("D:\\petshare-repo\\1\\file.jpg");
-
-            String namespaceNam = "pics";
-
-            for (int i = 0; i < 100; i++) {
-                RiakUtil.getInstance().create(new RiakFile("" + i, "Value" + i), "" + i, namespaceNam);
-            }
-
-            for (int i = 0; i < 100; i++) {
-                String output = RiakUtil.getInstance().read("" + i, namespaceNam);
-                System.out.println(">>>>>>>>>>>>>>>>>>>>******** " + output);
-            }
-
-//
-//            String objectKey = "files";
-//            String namespaceNam = "pics";
-//
-//            RiakUtil.getInstance().create(objectToPerisit, objectKey, namespaceNam);
-//
-//            Namespace quotesBucket = new Namespace(namespaceNam);
-//            Location quoteObjectLocation = new Location(quotesBucket, objectKey);
-//            FetchValue fetchOp = new FetchValue.Builder(quoteObjectLocation)
-//                    .build();
-//            RiakObject fetchedObject = client.execute(fetchOp).getValue(RiakObject.class);
-//            System.out.println(">>>>>>>>>>>>>>>>>>>>******** " + fetchedObject.getValue().toString());
-//
-//            System.out.println("Put lu");
-        } catch (Exception ex) {
-            Logger.getLogger(RiakUtil.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

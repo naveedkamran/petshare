@@ -1,6 +1,7 @@
 package com.tub.petshare.web;
 
 import com.mongodb.client.FindIterable;
+import com.tub.petshare.apputil.CastUtil;
 import com.tub.petshare.apputil.ObjFactory;
 import com.tub.petshare.domain.Pet;
 import com.tub.petshare.domain.RiakFile;
@@ -34,26 +35,12 @@ public class PetController {
     @Autowired
     private ObjFactory objFactory;
 
-    public Map castToMap(Pet pet) {
-        Map<String, Object> map = new HashMap();
-
-        map.put("age", pet.getAge());
-        map.put("contact", pet.getContact());
-        map.put("description", pet.getDescription());
-        map.put("gender", pet.getGender());
-        map.put("id", pet.getId());
-        map.put("location", pet.getLocation());
-        map.put("name", pet.getName());
-
-        return map;
-    }
-
     @RequestMapping(value = "/pet", method = RequestMethod.POST,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<Void> create(@RequestBody Pet pet,
             UriComponentsBuilder ucBuilder) {
-        PetService.getInstance().create(castToMap(pet));
+        PetService.getInstance().create(CastUtil.getInstance().castToMap(pet));
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/pet/{id}").buildAndExpand(1L).toUri());
@@ -93,7 +80,7 @@ public class PetController {
     public ResponseEntity<Document> update(@PathVariable(name = "id") String id,
             @RequestBody Pet pet) {
         Document docInDb = PetService.getInstance().read(id);
-        Document docNew = new Document(castToMap(pet));
+        Document docNew = new Document(CastUtil.getInstance().castToMap(pet));
 
         if (docInDb == null) {
             return new ResponseEntity<Document>(HttpStatus.NOT_FOUND);

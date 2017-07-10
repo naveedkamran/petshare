@@ -1,6 +1,10 @@
 package com.tub.petshare;
 
+import com.tub.petshare.domain.RiakFile;
+import com.tub.petshare.nosql.RiakUtil;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.assertj.core.api.BDDAssertions.then;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,10 +37,34 @@ public class ConfigTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
+    public void testRiak() throws Exception {
+        try {
+
+            RiakFile objectToPerisit = new RiakFile();
+            objectToPerisit.setId("1");
+            objectToPerisit.setLocation("D:\\petshare-repo\\1\\file.jpg");
+
+            String namespaceNam = "pics";
+
+            for (int i = 0; i < 100; i++) {
+                RiakUtil.getInstance().create(new RiakFile("" + i, "Value" + i), "" + i, namespaceNam);
+            }
+
+            for (int i = 0; i < 100; i++) {
+                String output = RiakUtil.getInstance().read("" + i, namespaceNam);
+                System.out.println(">>>>>>>>>>>>>>>>>>>>******** " + output);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(RiakUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Test
     public void shouldReturn200WhenSendingRequestToController() throws Exception {
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
-                "http://localhost:" + this.port + "/hello-world", Map.class);
+                "http://localhost:" + this.port + "/", Map.class);
 
         then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
